@@ -1,28 +1,40 @@
-const width = 125;
-const height = 125;
-
-const noseconeWidth = 50;
-const noseconeHeight = 50;
+const width = 150;
+const height = 130;
 setDocDimensions(width, height);
 
-const turtle = new bt.Turtle();
-turtle.jump([2*width/6,4*height/6]);
-turtle.goTo([3*width/6, 5*height/6]);
-turtle.goTo([4*width/6, 4*height/6]);
-turtle.goTo([4*width/6, 4*height/6]);
-turtle.goTo([2*width/6, 4*height/6]);
+const rocketWidth = 20;
 
-turtle.goTo([2*width/6,height/6]);
-turtle.goTo([4*width/6, height/6]);
-turtle.goTo([4*width/6, 4*width/6]);
+const noseconeHeight = 30;
+const payloadHeight = 40;
+const boosterHeight = 40;
+const engineHeight = 10;
+const flameHeight = 10;
+const finWidth = 10;
+const finBottomHeight = 10;
+const finTopHeight = 10;
+const rocketHeight = noseconeHeight + payloadHeight + boosterHeight + engineHeight + flameHeight;
+const noseconeCurveCoefficient = 20;
+const payloadCurveCoefficient = 20;
 
-turtle.jump([3*width/6, 3*height/6]);
-turtle.arc(360,5);
-turtle.jump([3*width/6, 3*height/6-1]);
-turtle.arc(360,6);
-const path = turtle.path;
-turtle.jump([2*width/6,4*height/6]);
-for(let i = turtle.position[0]; i < 3*width/6; i++) {
-  turtle.goTo([i, height/6]);
-}
-drawLines(path);
+const leftMargin = (width-rocketWidth)/2;
+const rightMargin = (width-rocketWidth)/2+rocketWidth;
+
+const bottomMargin = (height-rocketHeight)/2;
+const topMargin = (height-rocketHeight)/2+rocketHeight;
+
+const heightWithoutNosecone = bottomMargin+payloadHeight+boosterHeight+engineHeight+flameHeight;
+const leftNoseCone = [bt.nurbs([[leftMargin, heightWithoutNosecone],[leftMargin+rocketWidth/4, heightWithoutNosecone + 5*noseconeHeight/6],[leftMargin+rocketWidth/2, heightWithoutNosecone + noseconeHeight]],{steps: 100, degree: 2})];
+const rightNoseCone = [bt.nurbs([[leftMargin+rocketWidth, heightWithoutNosecone],[leftMargin+3*rocketWidth/4, heightWithoutNosecone + 5*noseconeHeight/6],[leftMargin+rocketWidth/2, heightWithoutNosecone + noseconeHeight]],{steps: 100, degree: 2})];
+
+const noseconeCurve = [bt.nurbs([[leftMargin, heightWithoutNosecone],[leftMargin+rocketWidth/2, heightWithoutNosecone + noseconeHeight/noseconeCurveCoefficient],[leftMargin+rocketWidth, heightWithoutNosecone]],{steps: 100, degree: 2})];
+const payload = [[leftMargin, heightWithoutNosecone], [leftMargin, heightWithoutNosecone-payloadHeight], [leftMargin + rocketWidth, heightWithoutNosecone - payloadHeight], [leftMargin + rocketWidth, heightWithoutNosecone]];
+
+const heightWithoutBooster = bottomMargin+engineHeight+flameHeight;
+const payloadCurve = [bt.nurbs([[leftMargin, heightWithoutBooster + boosterHeight],[leftMargin+rocketWidth/2, heightWithoutBooster + boosterHeight + payloadHeight/payloadCurveCoefficient],[leftMargin+rocketWidth, heightWithoutBooster + boosterHeight]],{steps: 100, degree: 2})];
+const booster = [[leftMargin, heightWithoutBooster+boosterHeight], [leftMargin, heightWithoutBooster], [leftMargin + rocketWidth, heightWithoutBooster], [leftMargin, heightWithoutBooster + boosterHeight]];
+
+drawLines(leftNoseCone);
+drawLines(rightNoseCone);
+drawLines(noseconeCurve);
+drawLines(payloadCurve);
+drawLines([payload, booster]);
