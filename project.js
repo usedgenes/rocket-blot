@@ -1,30 +1,35 @@
+/*
+@title: Rock It
+@author: Eugene
+@snapshot: skinny rocket
+*/
 const width = 150;
 const height = 130;
 
-const rocketWidth = 20;
+const rocketWidth = 5;
 
 const noseconeHeight = 30;
 const payloadHeight = 40;
 const boosterHeight = 40;
-const engineHeight = 10;
-const topEngineWidth = 5;
-const bottomEngineWidth = 10;
-const flameHeight = 10;
-const flameFirstWidth = 6;
-const flameSecondWidth = 10;
-const flameThirdWidth = 1;
-const finWidth = 10;
+const engineHeight = 2;
+const topEngineWidth = 3;
+const bottomEngineWidth = 4;
+const flameHeight = 12;
+const flameFirstWidth = 3;
+const flameSecondWidth = 4;
+const flameThirdWidth = 3;
+const finWidth = 20;
 const finBottomHeight = 10;
 const finTopHeight = 15;
 const finDepth = 2;
 const finOffset = 3;
 const noseconeCurveCoefficient = 20;
 const payloadCurveCoefficient = 20;
-const innerWindowRadius = 4;
-const outerWindowRadius = 6;
+const innerWindowRadius = 0;
+const outerWindowRadius = 0;
 
-const rotateDegrees = 0;
-const rotatePoint = [50,30]
+const rotateDegrees = -45;
+const rotatePoint = [75,65]
 
 setDocDimensions(width, height);
 const rocketHeight = noseconeHeight + payloadHeight + boosterHeight + engineHeight + flameHeight;
@@ -57,28 +62,21 @@ const engine = [[leftMargin+(rocketWidth-topEngineWidth)/2, heightWithoutBooster
 
 const heightWithoutEngine = bottomMargin + flameHeight;
 const center = leftMargin + rocketWidth/2
-const flameLeft1 = [bt.nurbs([[center - flameFirstWidth/2, heightWithoutEngine],[center - flameFirstWidth/2 - flameSecondWidth/5, heightWithoutEngine - flameHeight/6],[center - flameSecondWidth/2, heightWithoutEngine - flameHeight/3]],{steps: 100, degree: 2})];
-const flameLeft2 = [bt.nurbs([[center - flameSecondWidth/2, heightWithoutEngine - flameHeight/3], [center - flameSecondWidth/2 + flameFirstWidth/5, heightWithoutEngine - flameHeight/3 + flameHeight/6], [center - flameSecondWidth/2 + 2*flameFirstWidth/5, heightWithoutEngine - flameHeight/3 + flameHeight/5]],{steps: 100, degree: 2})];
-// const flameLeft3 = [bt.nurbs([[center - flameFirstWidth/2, heightWithoutEngine],[center - flameFirstWidth/2 - flameSecondWidth/3, heightWithoutEngine - flameHeight/6],[center - flameSecondWidth/2, heightWithoutEngine - flameHeight/3]],{steps: 100, degree: 2})];
-// const flameLeft4 = [bt.nurbs([[center - flameFirstWidth/2, heightWithoutEngine],[center - flameFirstWidth/2 - flameSecondWidth/3, heightWithoutEngine - flameHeight/6],[center - flameSecondWidth/2, heightWithoutEngine - flameHeight/3]],{steps: 100, degree: 2})];
+const flameLeft1 = [bt.nurbs([[center - flameFirstWidth/2, heightWithoutEngine],[center - flameFirstWidth/2 - flameSecondWidth/8, heightWithoutEngine - flameHeight/6],[center - flameSecondWidth/2, heightWithoutEngine - flameHeight/3]],{steps: 100, degree: 2})];
+const flameLeft2 = [bt.nurbs([[center - flameSecondWidth/2, heightWithoutEngine - flameHeight/3], [center - flameSecondWidth/2 + 0.8*flameFirstWidth/5, heightWithoutEngine - flameHeight/3 + flameHeight/8], [center - flameSecondWidth/2 + 0.6*flameFirstWidth/5, heightWithoutEngine - flameHeight/3 + flameHeight/10]],{steps: 100, degree: 2})];
+const flameLeft3 = [bt.nurbs([[center - flameSecondWidth/2 + 0.6*flameFirstWidth/5, heightWithoutEngine - flameHeight/3 + flameHeight/10], [center-flameSecondWidth/2, heightWithoutEngine-flameHeight/3 - flameHeight/6], [center-flameThirdWidth/2, heightWithoutEngine-2*flameHeight/3]],{steps: 100, degree: 2})];
+const flameLeft4 = [bt.nurbs([[center-flameThirdWidth/2, heightWithoutEngine-2*flameHeight/3], [center-flameThirdWidth/2+0.6*flameFirstWidth/5, heightWithoutEngine-2*flameHeight/3+flameHeight/8], [center-flameThirdWidth/2+0.4*flameFirstWidth/5, heightWithoutEngine - 2*flameHeight/3 + flameHeight/10]],{steps: 100, degree: 2})];
+const flameLeft5 = [bt.nurbs([[center-flameThirdWidth/2+0.4*flameFirstWidth/5, heightWithoutEngine - 2*flameHeight/3 + flameHeight/10], [center-flameThirdWidth/2, heightWithoutEngine - 2*flameHeight/3], [center, heightWithoutEngine - 5.5*flameHeight/6]],{steps: 100, degree: 2})];
 
+const flameRight1 = [bt.nurbs([[center + flameFirstWidth/2, heightWithoutEngine],[center + flameFirstWidth/2 + flameSecondWidth/8, heightWithoutEngine - flameHeight/6],[center + flameSecondWidth/2, heightWithoutEngine - flameHeight/3]],{steps: 100, degree: 2})];
+const flameRight2 = [bt.nurbs([[center + flameSecondWidth/2, heightWithoutEngine - flameHeight/3], [center + flameSecondWidth/2 - 0.8*flameFirstWidth/5, heightWithoutEngine - flameHeight/3 + flameHeight/8], [center + flameSecondWidth/2 - 0.6*flameFirstWidth/5, heightWithoutEngine - flameHeight/3 + flameHeight/10]],{steps: 100, degree: 2})];
+const flameRight3 = [bt.nurbs([[center + flameSecondWidth/2 - 0.6*flameFirstWidth/5, heightWithoutEngine - flameHeight/3 + flameHeight/10], [center+flameSecondWidth/2, heightWithoutEngine-flameHeight/3 - flameHeight/6], [center+flameThirdWidth/2, heightWithoutEngine-2*flameHeight/3]],{steps: 100, degree: 2})];
+const flameRight4 = [bt.nurbs([[center+flameThirdWidth/2, heightWithoutEngine-2*flameHeight/3], [center+flameThirdWidth/2-0.6*flameFirstWidth/5, heightWithoutEngine-2*flameHeight/3+flameHeight/8], [center+flameThirdWidth/2-0.4*flameFirstWidth/5, heightWithoutEngine - 2*flameHeight/3 + flameHeight/10]],{steps: 100, degree: 2})];
+const flameRight5 = [bt.nurbs([[center+flameThirdWidth/2-0.4*flameFirstWidth/5, heightWithoutEngine - 2*flameHeight/3 + flameHeight/10], [center+flameThirdWidth/2, heightWithoutEngine - 2*flameHeight/3], [center, heightWithoutEngine - 5.5*flameHeight/6]],{steps: 100, degree: 2})];
+
+bt.join(leftNoseCone, rightNoseCone, noseconeCurve, payloadCurve, innerWindow, outerWindow, flameLeft1, flameLeft2, flameLeft3, flameLeft4, flameLeft5, flameRight1, flameRight2, flameRight3, flameRight4, flameRight5);
 bt.rotate(leftNoseCone, rotateDegrees, rotatePoint);
-bt.rotate(rightNoseCone, rotateDegrees, rotatePoint);
-bt.rotate(noseconeCurve, rotateDegrees, rotatePoint);
-bt.rotate(payloadCurve, rotateDegrees, rotatePoint);
-bt.rotate(innerWindow, rotateDegrees, rotatePoint);
-bt.rotate(outerWindow, rotateDegrees, rotatePoint);
 bt.rotate([leftPayload, rightPayload, booster, leftFin, rightFin, middleFinBottomPart, middleFinTopPart, engine], rotateDegrees, rotatePoint);
 
 drawLines(leftNoseCone);
-drawLines(rightNoseCone);
-drawLines(noseconeCurve);
-drawLines(payloadCurve);
-drawLines(innerWindow);
-drawLines(outerWindow);
-drawLines(flameLeft1);
-drawLines(flameLeft2);
-// drawLines(flameLeft3);
-// drawLines(flameLeft4);
-
 drawLines([leftPayload, rightPayload, booster, leftFin, rightFin, middleFinBottomPart, middleFinTopPart, engine]);
